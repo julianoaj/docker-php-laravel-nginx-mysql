@@ -1,0 +1,47 @@
+version: "3.9"
+services: 
+    web-server:
+      image: nginx:1.21.1
+      container_name: webdev-nginx
+      ports:
+        - "80:80"
+        - "443:443"
+      networks:
+        - web-dev
+      volumes:
+        - ./confs/servers/:/etc/nginx/conf.d/
+        - ./projects:/var/www/projects
+        - ./confs/ssl/:/var/www/ssl
+
+    php:
+      build:
+        dockerfile: ./php.dockerfile
+        context: .
+      image: php7.4-fpm
+      container_name: webdev-php
+      volumes: 
+        - ./projects:/var/www/projects
+      ports: 
+        - "9000:9000"
+      networks: 
+        - web-dev
+
+    db:
+      image: mysql:8.0.26
+      container_name: webdev-mysql
+      volumes: 
+        - ./confs/mysql_db:/var/lib/mysql
+      command: --default-authentication-plugin=mysql_native_password
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: test_db
+        MYSQL_USER: devuser
+        MYSQL_PASSWORD: devpass
+      ports:
+        - "3306:3306"
+      networks: 
+        - web-dev
+
+networks: 
+      web-dev:
+        driver: bridge
