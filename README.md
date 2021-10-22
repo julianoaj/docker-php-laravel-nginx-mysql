@@ -21,7 +21,7 @@
 <p>With Docker Compose I'm running three containers, each one with: Nginx, PHP (with composer, xdebug and configs) and MySql.</p>
 
 <p>
-If you are a beginner with docker, don't feel tied in the same configuration of this environment. If you want to change, add or modify any of the follow steps fell free to do it, the purpose of this guide is to just give you some reference and help.
+The purpose of this guide is to give some reference and help, don't feel tied in the same configs.
 </p>
 
 <section style="padding: 10px;">
@@ -36,49 +36,39 @@ If you are a beginner with docker, don't feel tied in the same configuration of 
     </li>
     <p>A simple and a fast way to get this environment.</p>
     <li>
-      <p><a href="#docker-commands">Docker: The most used commands.</a></p>
+      <p><a href="#docker-commands">Docker used commands.</a></p>
     </li>
-    <p>The most used commands to run your applications and adding them in a Makefile.</p>
+    <p>Commands that maybe you will need use to build this environment.</p>
     <li>
-      <p><a href="#dic-tree">Environment Tree</a></p>
+      <p><a href="#dic-tree">Directories Tree</a></p>
     </li>
     <p>Where your projects, backup and configs will be.</p>
     <li>
       <p><a href="#makefile">Makefile </a>[<code style="color: red;">optional</code>]</p>
     </li>
-    <p>Adding docker commands into a Makefile making your life easier.</p>
+    <p>Automating your environment with a makefile.</p>
     <li>
       <p><a href="#setting-php">Setting</a> <code style="color: green;">php.dockerfile</code></p>
     </li>
-    <p>PHP devDependencies: xdebug, composer and configs.</p>
+    <p>Installing xdebug, compose, libs and setting configs.</p>
     <li>
-      <p><a href="#dic-tree">Directory tree.</a></p>
+      <p><a href="#conf-nginx">Setting Nginx With SSL Certificates.</a></p>
     </li>
-    <p>Projects, MySql databases and confs</p>
-    <li>
-      <p><a href="#conf-nginx">Configure FastCGI Nginx With SSL Certificates.</a></p>
-    </li>
-    <p>Configure Nginx for PHP-FPM, gen a SSL certificate and configure it on our server.</p>
+    <p>Setting PHP-FPM for Nginx, generating our SSL certificate and setting it on our server.</p>
     <li>
       <p><a href="#docker-compose">docker-compose.yml</a></p>
     </li>
-    <p>Building our container images.</p>
+    <p>Building our images in containers.</p>
     <li>
-      <p><a href="#run-compose">Run the project</a></p>
+      <p><a href="#test-db">Running and testing our project.</a></p>
     </li>
-    <p>All done! Its time to press start.</p>
-    <li>
-      <p><a href="#test-db">Testing your connection with MySql.</a></p>
-    </li>
-    <p>Test your native php application and laravel.</p>
 </ol>
 </section>
 <hr>
 
 <section id="prerequisites" style="padding: 10px;">
 <h2> Install prerequisites </h2>
-<p>This environment was created on windows but all docker things will work on any SO.</p>
-<p>Dependencies :</p>
+<p>This environment was created on windows but all docker things will work on any SO. Just follow install instructions on documentation:</p>
 <ul>
   <li><a href="https://docs.docker.com/engine/install/">Docker</a></li>
   <li><a href="https://docs.docker.com/compose/install/">Docker Compose</a></li>
@@ -100,7 +90,7 @@ docker -v
 <hr>
 
 <section id="clone" style="padding: 10px;">
-<h2>Clone the project [<code style="color: red">optional</code>]</h2>
+<h2>Clone the project</h2>
 <p>A simple and a fast way to you get this environment is to clone my project into a directory, open your terminal, navigate into project cloned directory and write some commands:</p>
 <pre>
 docker-compose build
@@ -114,9 +104,6 @@ docker-compose up -d
 <li>php ->   9000</li>
 <li>mysql -> 3306</li>
 </ul><br>
-<blockquote>
-Pre requisite of this section: Docker-compose, Git
-</blockquote>
 </section>
 <hr>
 
@@ -150,9 +137,6 @@ Pre requisite of this section: Docker-compose, Git
   docker exec -it mysql bash
   mysql -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD"
 </pre>
-<blockquote>
-Pre requisite of this section: Docker, docker-compose
-</blockquote>
 </section>
 <hr>
 
@@ -188,10 +172,10 @@ Pre requisite of this section: Docker, docker-compose
 
 <section id="makefile" style="padding: 10px;">
 <h2>Makefile</h2>
-<p>You can type all commands in Docker Commands section or add shortcuts for it using a Makefile.</p>
+<p>Instead of typing complexes commands in your terminal, you can use a Makefile to simplifying.</p>
 <p>Prerequisite to use a Makefile is to install [<code>make</code>] command.</p>
 <p>
-  With [<code>make</code>] installed, I don't recommend, but you can clone my project and fell free to use my Makefile with some already defined shortcut commands. If you're going to use it, make sure that your containers are named with the same name as mine and remember, I'm using windows and some commands maybe will not work on another SO.
+  With [<code>make</code>] installed, I don't recommend, but you can clone my repository and use my Makefile with some already defined shortcut commands. If you're going to use it, make sure that your containers are named with the same name as mine and remember, I'm using windows and some commands maybe will not work on another SO.
 </p>
 <table>
   <thead>
@@ -235,8 +219,8 @@ Pre requisite of this section: make, clone my project and Windows 10 user.
 
 <section id="setting-php" style="padding: 10px;">
 <h2>Setting <code>php.dockerfile</code></h2>
-<p>Create a <code>php.dockerfile</code> that will be our future container. Here we'll install php:7.4-fpm image, core extensions for PHP, composer (package manager) and some other util/performance configs.</p>
-<h3>PHP7.4-FPM tag for docker: (<a href="https://hub.docker.com/_/php">image link</a>)</h3>
+<p>Its time to we build our PHP container with xdebug, composer and configs inside a Dockerfile. Create the file inside follow path: <code>/environmentProject/php.dockerfile</code></p>
+<p>Inside the file we'll set our PHP 7.4 FPM version. To use it we need a tag that we can find on dockerhub. With tag in hands, our first line should be:</p>
 <pre>
 FROM php:7.4-fpm
 </pre>
@@ -245,7 +229,7 @@ Versions tag list <a href="https://hub.docker.com/_/php?tab=tags&page=1&ordering
 </blockquote>
 <br>
 <h3>Core Extensions:</h3>
-<p>Installing: libfreetype6-dev, libjpeg62-turbo-dev, libpng-dev and mysql pdo.</p>
+<p>Following the version we need to install our core extensions: </p>
 <pre>
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
@@ -256,11 +240,12 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable pdo_mysql
 </pre>
 <blockquote>
-Some extensions come by default. It depends on the PHP version you are using. Run <code>php -m</code> in the container with php image to get a full list of all extensions already in.
+Some extensions come by default. It depends on the PHP version you are using. Run <code>docker run --rm php:7.4-fpm php -m</code> in the your terminar to see full extension list.
 </blockquote>
 <br>
 <h3><a href="https://pecl.php.net/">PECL</a> extensions:</h3>
-<p>Installing: xdebug-3.0.4, libmencached and zlib1g.</p>
+<p>Its time to bring some extensions for performance and utility, to it we'll use PECL, a PHP extension repository.<br>
+Here we'll install <code>xdebug</code>, <code>libmencached</code> and <code>zlib1g</code>. Lets add some more lines in our dockerfile:</p>
 <pre>
 RUN pecl install xdebug-3.0.4 \
     && docker-php-ext-enable xdebug
@@ -273,7 +258,7 @@ RUN apt-get install -y libmemcached-dev zlib1g-dev \
 </blockquote>
 <br>
 <h3>Packages:</h3>
-<p>Installing: zip, unzip and composer.</p>
+<p>For packages we'll use composer with zip and unzip:</p>
 <pre>
 RUN apt-get install zip unzip \
     && curl -sS https://getcomposer.org/installer -o composer-setup.php \
@@ -281,7 +266,7 @@ RUN apt-get install zip unzip \
     && unlink composer-setup.php
 </pre>
 <h3>Configs (utils):</h3>
-<p>Setting our timezone for PHP and activating opcache for performance of PHP.</p>
+<p>Setting our timezone and activating opcache for performance of PHP:</p>
 <pre>
 RUN echo 'date.timezone="America/Sao_Paulo"' >> /usr/local/etc/php/conf.d/date.ini \
     && echo 'opcache.enable=1' >> /usr/local/etc/php/conf.d/opcache.conf \
@@ -295,8 +280,8 @@ You can check the list of timezone supported by PHP <a href="https://www.php.net
 <hr>
 
 <section id="conf-nginx" style="padding: 10px;">
-<h2>Configure Nginx FastCGI with SSL Certificates for PHP and Laravel</h2>
-<p>If you want to use PHP and Laravel with Nginx you need to configure FastCGI and a few other things. Lets break it into two steps:</p>
+<h2>Setting Nginx FastCGI with SSL Certificates for PHP and Laravel</h2>
+<p>If you want to use PHP and Laravel with Nginx you need to configure <a href="https://en.wikipedia.org/wiki/FastCGI">FastCGI</a> and a few other things. Let's break it into steps:</p>
 <ol>
   <li>
     Gen SSL (<code style="color: red;">optional</code>)
@@ -305,17 +290,27 @@ You can check the list of timezone supported by PHP <a href="https://www.php.net
       <a href="https://gist.github.com/cecilemuller/9492b848eb8fe46d462abeb26656c4f8">GUIDE</a>.
     </p>
   </li>
-  <li>Server <code>server.conf</code>
-  <p>Create <code>/environmentProject/confs/servers/server.conf</code> file.</p>
-  <p>Edit <code>server.conf</code>, make a config that listen ports 80, 443 (ssl port), set <code>ssl_certificate</code> and <code>ssl_certificate_key</code> with your SSL certificates location and pass all FastCGI configs for PHP-FPM. Example:</p>
+  <li>
+    Server <code>server.conf</code>
+    <p>
+      Create <code>/environmentProject/confs/servers/server.conf</code> file.
+    </p>
+  </li>
+</ol>
+<p>Edit <code>server.conf</code>, set a config that listen container port 80 and 443 (ssl port), set <code>ssl_certificate</code> and <code>ssl_certificate_key</code> with your SSL certificates location and pass all FastCGI configs for PHP-FPM. Example:</p>
 <pre>
   server {
+    ############# Ports #################
     listen 80;
     listen 443 ssl;
+    #####################################
     root /var/www/projects/;
+    ########## SSL CERTIFICATE ##########
     ssl_certificate /var/www/ssl/localhost.crt;
     ssl_certificate_key /var/www/ssl/localhost.key; <br>
+    #####################################
     autoindex on; <br>
+    ########## FAST CGI CONFIG ##########
     location ~ \.php$ {
       fastcgi_index index.php;
       fastcgi_pass php:9000;
@@ -354,47 +349,25 @@ server {
         deny all;
     }
 }
-</pre>  
-  </li>
-</ol>
+</pre>
+<blockquote>
+Check <a href="https://laravel.com/docs/8.x/deployment#nginx">Laravel documentation</a> for more details.
+</blockquote>
 </section>
 <hr>
 
 <section id="docker-compose" style="padding: 10px;">
 <h2>docker-compose.yml</h2>
-<p>It's time to bring all together in a group.</p>
+<p>It's time to bring all together using docker-compose.</p>
+<p>I'll not get in details in this guide about versions, services, volumes, etc... but you can learn more in <a href="https://docs.docker.com/compose/">Docker Documentation</a>.</p>
 <p>Create <code>/environmentProject/docker-compose.yml</code> file, edit it and lets start!</p>
-<h3>Structure:</h3>
-<p>A <code>docker-compose.yml</code> should be like:</p>
+<h3 style="font-weight: bold;">Version:</h3>
+<p>The first line of our <code>docker-compose.yml</code> should be the version of docker-compose. Here we'll use the latest:</p>
 <pre>
-version: "3.9"  # optional since v1.27.0
-services:
-  web:
-    build: .
-    ports:
-      - "5000:5000"
-    volumes:
-      - .:/code
-      - logvolume01:/var/log
-    links:
-      - redis
-  php:
-    image: php
-    ports:
-      - "5001:5001"
-    volumes:
-      - .:/code
-      - logvolume01:/var/log
-  mysql:
-    image: mysql
-    ports:
-      - "5001:5001"
-networks:
-  example_network:
-    driver: bridge
+version: "3.9"
 </pre>
-<p>We must follow indentation! I'll not get in details in this guide about versions, services, volumes, etc... but you can learn more in <a href="https://docs.docker.com/compose/">Docker Documentation</a>.</p>
-<p>Following <code>version</code> we gonna setup 3 (or 4) containers: Nginx, PHP, MySql and Node(NPM) [<code style="color: red">optional</code>]. Let's break it into steps:</p>
+<h3 style="font-weight: bold;">Services:</h3>
+<p>Following <code>version</code> line let's build our containers. We'll set 3 (or 4) containers: Nginx, PHP, MySql and Node(NPM) (<code style="color: red">optional</code>). Let's break it into steps:</p>
 <ol>
   <li>
   <h3>Nginx</h3>
@@ -435,7 +408,8 @@ networks:
   </li>
   <li>
   <h3>MySql</h3>
-  <p>Here I'm creating a database on start for tests in the end.</p>
+  <p>Here I'm creating a database on start for tests in the end. You can change MYSQL_USER and MYSQL_PASSWORD if you want.
+  </p>
     <pre>
     db:
       image: mysql:8.0.26
@@ -485,10 +459,10 @@ networks:
 </section>
 <hr>
 
-<section id="run-compose" style="padding: 10px;">
-<h2>Running docker-compose</h2>
+<section id="test-db" style="padding: 10px;">
+<h2>Running and testing our project.</h2>
 <p>With all set up let's bring our environment to life.</p>
-<p>In <code>/environmentProject/</code> directory build all images with:</p>
+<p>In <code>/environmentProject/</code> directory, build all images with:</p>
 <pre>
 docker-compose build
 </pre>
@@ -497,13 +471,7 @@ docker-compose build
 docker-composer up -d
 </pre>
 <p>Get in your <a href="https://localhost">localhost</a> and voilá!</p>
-<p>Done! Our environment lives! 🌟</p>
-<hr>
-</section>
-
-<section id="test-db" style="padding: 10px;">
-<h2>Testing your connection with MySql.</h2>
-<p>With all running normally, you can test your PHP connection with MySql navigating to <a href="http://localhost/index.php">localhost/index.php</a>. If all is okay you will receive a successfully message.</p>
+<p>With all running, you can test your MySql connection navigating to <a href="http://localhost/index.php">localhost/index.php</a>. If all is okay you will receive a successfully message.</p>
 <p>For laravel test, you will need to edit <code>/example-app/.env</code> and set your connection with mysql. Example:</p>
 <pre>
 DB_CONNECTION=mysql
