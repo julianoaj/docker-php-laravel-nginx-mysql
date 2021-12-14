@@ -52,7 +52,7 @@ The purpose of this guide is to give some reference and help, don't feel tied in
     </li>
     <p>Installing xdebug, compose, libs and setting configs.</p>
     <li>
-      <p><a href="#conf-nginx">Setting Nginx With SSL Certificates.</a></p>
+      <p><a href="#conf-nginx">Setting Nginx With SSL Certificates. [<code style="color: red">optional</code>]</a></p>
     </li>
     <p>Setting PHP-FPM for Nginx, generating our SSL certificate and setting it on our server.</p>
     <li>
