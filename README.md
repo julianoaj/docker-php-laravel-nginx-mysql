@@ -1,11 +1,11 @@
 <div align="center">
-  <img src="https://i.imgur.com/arG6UP8.png" width="348" height="209">
-  <p><img src="https://i.imgur.com/00bDs2o.png" width="348" height="102" style="margin-top: -50px"></p>
+      <a href="https://alisonjuliano.com">
+        <img src="https://imgur.com/13kinqs.jpg">
+    </a>
   <p>
-    <p>Welcome to my universe of coding! 👨‍💻</p>
-    <p>“I think it's fair to say that personal computers have become the most empowering tool we've ever created.
-      They're tools of communication, they're tools of creativity, and they can be shaped by their user.” - Bill
-      Gates</p>
+    <p style="font-style: italic;">"I decided to follow the path of rabbit hole, let's see how far this can take us" - <a href="https://alisonjuliano.com">AJ</a>
+    </p>
+    <p style="font-weight: bold;">Sharing, learning and knowing people all around the world. Let's code!</p>
     <a href="https://alisonjuliano.com"> 
     <img src="https://img.shields.io/static/v1?label=Fullstack&message=AJ&color=64ffda&style=for-the-badge&logo=dungeonsanddragons">
     </a>
@@ -494,6 +494,8 @@ docker exec (container_id) php artisan migrate
 <p>
 If you want help or send a feedback, get in my website and send me a e-mail:
 </p>
-<a href="https://alisonjuliano.com/#contact"><img src="https://i.imgur.com/arG6UP8.png" width="200" height="120"></a>
+    <a href="https://alisonjuliano.com">
+        <img src="https://i.imgur.com/0aMXtBq.png" width="239" height="100">
+    </a>
 </div>
 
