@@ -21,7 +21,7 @@
 <p>With Docker Compose I'm running three containers, each one with: Nginx, PHP (with composer, xdebug and configs) and MySql.</p>
 
 <p>
-The purpose of this guide is to give some reference and help, don't feel tied in the same configs.
+The purpose of this guide is to give some reference and help, don't feel tied to the same configs.
 </p>
 
 <section style="padding: 10px;">
@@ -220,9 +220,9 @@ Pre requisite of this section: make, clone my project and Windows 10 user.
 <section id="setting-php" style="padding: 10px;">
 <h2>Setting <code>php.dockerfile</code></h2>
 <p>Its time to we build our PHP container with xdebug, composer and configs inside a Dockerfile. Create the file inside follow path: <code>/environmentProject/php.dockerfile</code></p>
-<p>Inside the file we'll set our PHP 7.4 FPM version. To use it we need a tag that we can find on dockerhub. With tag in hands, our first line should be:</p>
+<p>Inside the file we'll set our PHP 8.2 FPM version. To use it we need a tag that we can find on dockerhub. With tag in hands, our first line should be:</p>
 <pre>
-FROM php:7.4-fpm
+FROM php:8.2-fpm
 </pre>
 <blockquote>
 Versions tag list <a href="https://hub.docker.com/_/php?tab=tags&page=1&ordering=last_updated">here</a>.
@@ -240,7 +240,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable pdo_mysql
 </pre>
 <blockquote>
-Some extensions come by default. It depends on the PHP version you are using. Run <code>docker run --rm php:7.4-fpm php -m</code> in the your terminar to see full extension list.
+Some extensions come by default. It depends on the PHP version you are using. Run <code>docker run --rm php:8.2-fpm php -m</code> in the your terminar to see full extension list.
 </blockquote>
 <br>
 <h3><a href="https://pecl.php.net/">PECL</a> extensions:</h3>
@@ -323,11 +323,8 @@ You can check the list of timezone supported by PHP <a href="https://www.php.net
 <pre>
 server {
     listen 80;
-    listen 443 ssl;
     server_name example.com;
-    root /var/www/projects/example-app/public;
-    ssl_certificate /var/www/ssl/localhost.crt;
-    ssl_certificate_key /var/www/ssl/localhost.key; <br>
+    root /var/www/projects/example-app/public; <br>
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-Content-Type-Options "nosniff"; <br>
     index index.php; <br>
@@ -396,7 +393,7 @@ version: "3.9"
       build:
         dockerfile: ./php.dockerfile
         context: .
-      image: php7.4-fpm
+      image: php:8.2-fpm
       container_name: webdev-php
       volumes: 
         - "./projects:/var/www/projects"
