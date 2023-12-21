@@ -84,7 +84,9 @@ docker -v
 <p>Optional tools:</p>
 <ul>
   <li><a href="https://git-scm.com/downloads">Git</a></li>
-  <li><a href="https://chocolatey.org/install">Make</a> (via chocolatey)</li>
+  <li><p>Make (Chocolatey)</p> <code>choco install make</code></li>
+  </br>
+  <li><p>Make  (Ubuntu) </p><code>sudo apt-get -y install make</code></li>
 </ul>
 </section>
 <hr>
@@ -302,12 +304,12 @@ You can check the list of timezone supported by PHP <a href="https://www.php.net
   server {
     ############# Ports #################
     listen 80;
-    listen 443 ssl;
+    # listen 443 ssl;
     #####################################
     root /var/www/projects/;
     ########## SSL CERTIFICATE ##########
-    ssl_certificate /var/www/ssl/localhost.crt;
-    ssl_certificate_key /var/www/ssl/localhost.key; <br>
+    # ssl_certificate /var/www/ssl/localhost.crt;
+    # ssl_certificate_key /var/www/ssl/localhost.key; <br>
     #####################################
     autoindex on; <br>
     ########## FAST CGI CONFIG ##########
